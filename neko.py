@@ -2,21 +2,22 @@ from discord.ext import commands
 import aiohttp
 import discord
 import uvloop
+import config as c
 asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 description = """
 I am a bot made to show nekos from nekos.life
 """
-bot = commands.AutoShardedBot(command_prefix="!", description=description)
+bot = commands.AutoShardedBot(command_prefix=c.prefix, description=description)
 
 
-
+ 
 @bot.event
 async def on_ready():
-    print('Logged in as:')
-    print('Username: ' + bot.user.name)
-    print('ID: ' + bot.user.id)
-    print('------')
+    print('Logged in as:')
+    print('Username: ' + bot.user.name)
+    print('ID: ' + bot.user.id)
+    print('------')
     guilds = str(len(bot.guilds))
     users = str(len(set(bot.get_all_members())))
     for x in range(bot.shard_count):
@@ -66,7 +67,7 @@ class dblapi:
         })
 
         headers = {
-            'authorization': 'auth key',
+            'authorization': c.bdlauth,
             'content-type' : 'application/json'
         }
 
@@ -90,4 +91,4 @@ class dblapi:
 bot.add_cog(dblapi(bot))
 n = neko(bot)
 bot.add_cog(n)
-bot.run("token")
+bot.run(c.token)
