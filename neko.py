@@ -89,5 +89,5 @@ class dblapi:
 
 bot.add_cog(dblapi(bot))
 n = neko(bot)
-bot.add_cog(n) it
+bot.add_cog(n)
 bot.run("token")
