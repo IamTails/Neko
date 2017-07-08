@@ -10,13 +10,13 @@ I am a bot made to show nekos from nekos.life
 bot = commands.AutoShardedBot(command_prefix="!", description=description)
 
 
- 
+
 @bot.event
 async def on_ready():
-    print('Logged in as:')
-    print('Username: ' + bot.user.name)
-    print('ID: ' + bot.user.id)
-    print('------')
+    print('Logged in as:')
+    print('Username: ' + bot.user.name)
+    print('ID: ' + bot.user.id)
+    print('------')
     guilds = str(len(bot.guilds))
     users = str(len(set(bot.get_all_members())))
     for x in range(bot.shard_count):
