@@ -47,8 +47,47 @@ class neko:
         embed = discord.Embed(colour=discord.Colour.blue())
         embed.set_image(url=nekos['neko'])
         await ctx.send(embed=embed)
+        
+        
+class dblapi:
+    """api."""
+
+    def __init__(self, bot):
+        self.bot = bot
+        self.session = aiohttp.ClientSession()
+
+    def __unload(self):
+        self.bot.loop.create_task(self.session.close())
+
+    async def update(self):
+        payload = json.dumps({
+            'server_count': len(self.bot.guilds),
+            'shard_count' : self.bot.shard_count
+        })
+
+        headers = {
+            'authorization': 'auth key',
+            'content-type' : 'application/json'
+        }
+
+        url = 'https://discordbots.org/api/bots/{}/stats'.format(bot.user.id)
+        async with self.session.post(url, data=payload, headers=headers) as resp:
+            print('dbl statistics returned {0.status} for {1}'.format(resp, payload))
+
+    async def on_guild_join(self, guild):
+        print("New guild {name} + {members} members".format(name=guild.name, members=guild.member_count))
+        await self.update()
+
+    async def on_guild_remove(self, guild):
+        print("guild removed {name} - {members} members".format(name=guild.name, members=guild.member_count))
+        await self.update()
+
+    async def on_ready(self):
+        await self.update()
 
 
+
+bot.add_cog(dblapi(bot))
 n = neko(bot)
-bot.add_cog(n)
+bot.add_cog(n) it
 bot.run("token")
